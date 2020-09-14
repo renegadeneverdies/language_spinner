@@ -1,0 +1,9 @@
+.slotbox {
+  height: 96px;
+  width: 96px;
+  margin: 10px;
+  display: inline-block;
+  overflow: hidden;
+  border: #EEE solid 1px;
+}
+
