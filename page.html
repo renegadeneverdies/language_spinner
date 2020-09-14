@@ -5,8 +5,18 @@
 </head>
 <body>
   <h2>Slot machine</h2>
-  <button id="button">Push</button>
-  <br></br>
+  <div id="panel">
+    <button id="button">Spin</button>
+    <form>
+      <label for="bet">Bet: </label>
+      <input type="text" id="bet" name="bet" value="1">
+      <fieldset disabled="disabled">
+        <label for="balance">Balance: </label>
+        <input type="text" id="balance" name="balance" value="100">
+      </fieldset>
+    </form>
+  </div>
+  <br>
   <div id="slotbox" class="slotbox">
 	  <div id="item1" class="item">
       <img src="pic1.png" id="item1-1">

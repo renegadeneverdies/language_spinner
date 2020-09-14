@@ -7,3 +7,25 @@
   border: #EEE solid 1px;
 }
 
+fieldset {
+  border: none;
+  padding: 0px;
+  margin: 0px;
+  display: inline;
+}
+
+form {
+  display: inline;
+}
+
+#panel {
+  display: inline;
+}
+
+input {
+  width: 50px;
+}
+
+#balance {
+  width: 100px;
+}

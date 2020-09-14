@@ -1,6 +1,6 @@
 function generate() {
   let n = Math.floor(Math.random() * 4);
-  return ("pictures/pic" + n + ".png");
+  return ("pic" + n + ".png");
 }
 
 function spinSlotbox(item, duration) {
@@ -27,11 +27,16 @@ function swap(item) {
 }
 
 function spinAll() {
-  let spinning = new Audio('sounds/spinning.WAV');
-  spinning.play();
-  let intId = setInterval(avalanche, 50);
-  setTimeout(function() { clearInterval(intId) }, 4000);
-  setTimeout(result, 4000);
+  // it should be impossible to play if bet is greater than balance
+  // but I'm clement enough to give you a last chance. use it wisely
+  if (parseInt(document.getElementById("balance").value) > 0) {
+    let spinning = new Audio('sounds/spinning.WAV');
+    spinning.play();
+    let intId = setInterval(avalanche, 50);
+    setTimeout(function() { clearInterval(intId) }, 4000);
+    setTimeout(result, 4000);
+  }
+  else { alert("You can't play anymore") };
 }
 
 function avalanche() {
@@ -42,7 +47,7 @@ function avalanche() {
 function checkSlots(slotList) {
   let js = "pic2.png";
   let items = srcList(scoped(slotList, "-2"), "/");
-  if (items.reduce(jackpotReducer(js))) { return "jackpot" }
+  if (items.reduce(jackpotReducer(items[0], js))) { return "jackpot" }
   else if (items.reduce(winReducer(items[0]))) { return "win" }
   else { return "lose" }
 }
@@ -55,8 +60,8 @@ function srcList(array, sep) {
   return array.map(x => x.src.split(sep).pop());
 }
 
-function jackpotReducer(jackpot) {
-  return (acc, cur) => cur === jackpot && acc;
+function jackpotReducer(first, jackpot) {
+  return (acc, cur) => cur === jackpot && acc && first === jackpot;
 }
 
 function winReducer(win) {
@@ -64,18 +69,35 @@ function winReducer(win) {
 }
 
 function result() {
+  let bet = document.getElementById("bet")
+  let balance = document.getElementById("balance");
   switch (checkSlots(slots)) {
     case "jackpot":
-      let jackpot = new Audio('sounds/jackpot.WAV');
-      jackpot.play();
+      balance.value = (parseInt(balance.value) + jackpot(bet.value)).toString();
       break;
     case "win":
-      let win = new Audio('sounds/win.WAV');
-      win.play();
+      balance.value = (parseInt(balance.value) + win(bet.value)).toString();
       break;
     case "lose":
-      let lose = new Audio('sounds/lose.WAV');
-      lose.play();
+      balance.value = (parseInt(balance.value) - lose(bet.value)).toString();
       break;
   }
+}
+
+function jackpot(bet) {
+  let sound = new Audio('sounds/jackpot.WAV');
+  sound.play();
+  return (parseInt(bet) * 100);
+}
+
+function win(bet) {
+  let sound = new Audio('sounds/win.WAV');
+  sound.play();
+  return (parseInt(bet) * 10);
+}
+
+function lose(bet) {
+  let sound = new Audio('sounds/lose.WAV');
+  sound.play();
+  return parseInt(bet);
 }
