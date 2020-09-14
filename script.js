@@ -35,7 +35,7 @@ function swap(item) {
 
 function swapRigged(item, val) {
   item.children[0].src = item.children[1].src;
-  item.children[1].src = val
+  item.children[1].src = val;
 }
 
 function spinAll() {
@@ -47,15 +47,21 @@ function spinAll() {
     let intId = setInterval(avalanche, 50);
     setTimeout(function() { clearInterval(intId) }, spinL);
     let items = scoped(slots, "-2");
-    if (instruction === "jackpot") {
-      setTimeout(function() { slots.map(x => swapRigged(x, jackpotPic)) }, spinL);
-      setTimeout(jackpot, spinL);
+    switch (instruction) {
+      case "jackpot":
+        setTimeout(function() { slots.map(x => swapRigged(x, jackpotPic)) }, spinL);
+        setTimeout(jackpot, spinL);
+        break;
+      case "win":
+        setTimeout(function() { slots.map(x => swapRigged(x, items[0].src)) }, spinL);
+        setTimeout(function() {
+          if (checkSlots(slots) === "jackpot") jackpot()
+          else win();
+          }, spinL);
+        break;
+      default:
+        setTimeout(result, spinL);
     }
-    else if (instruction === "win") {
-      setTimeout(function() { slots.map(x => swapRigged(x, items[0].src)) }, spinL);
-      setTimeout(result, spinL);
-    }
-    else { setTimeout(result, spinL) };
   }
   else { alert("You can't play anymore") };
 }
@@ -69,7 +75,7 @@ function checkSlots(slotList) {
   let items = srcList(scoped(slotList, "-2"), "/");
   if (items.reduce(jackpotReducer(items[0], jackpotPic))) { return "jackpot" }
   else if (items.reduce(winReducer(items[0]))) { return "win" }
-  else { return "lose" }
+  else { return "lose" };
 }
 
 function scoped(array, suffix) {
