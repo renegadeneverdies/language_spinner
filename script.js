@@ -4,6 +4,7 @@ var slotAnimations = slots.map(x => new Animation(spinSlotbox(x, 50)), document.
 var instruction = "none";
 var makeWin = document.getElementById("makeWin");
 var makeJackpot = document.getElementById("makeJackpot");
+var jackpotPic = "pic2.png";
 var spinL = 4000;
 
 button.addEventListener("click", spinAll, false);
@@ -47,12 +48,12 @@ function spinAll() {
     setTimeout(function() { clearInterval(intId) }, spinL);
     let items = scoped(slots, "-2");
     if (instruction === "jackpot") {
-      setTimeout(function() { slots.map(x => swapRigged(x, "pic2.png")) }, spinL);
+      setTimeout(function() { slots.map(x => swapRigged(x, jackpotPic)) }, spinL);
       setTimeout(jackpot, spinL);
     }
     else if (instruction === "win") {
       setTimeout(function() { slots.map(x => swapRigged(x, items[0].src)) }, spinL);
-      setTimeout(win, spinL);
+      setTimeout(result, spinL);
     }
     else { setTimeout(result, spinL) };
   }
@@ -65,9 +66,8 @@ function avalanche() {
 }
 
 function checkSlots(slotList) {
-  let js = "pic2.png";
   let items = srcList(scoped(slotList, "-2"), "/");
-  if (items.reduce(jackpotReducer(items[0], js))) { return "jackpot" }
+  if (items.reduce(jackpotReducer(items[0], jackpotPic))) { return "jackpot" }
   else if (items.reduce(winReducer(items[0]))) { return "win" }
   else { return "lose" }
 }
