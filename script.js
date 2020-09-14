@@ -1,3 +1,15 @@
+var button = document.getElementById("button");
+var slots = [1,2,3].map(x => document.getElementById("item"+x));
+var slotAnimations = slots.map(x => new Animation(spinSlotbox(x, 50)), document.timeline);
+var instruction = "none";
+var makeWin = document.getElementById("makeWin");
+var makeJackpot = document.getElementById("makeJackpot");
+var spinL = 4000;
+
+button.addEventListener("click", spinAll, false);
+makeWin.addEventListener("click", function() { instruction = "win" }, false);
+makeJackpot.addEventListener("click", function() { instruction = "jackpot" }, false);
+
 function generate() {
   let n = Math.floor(Math.random() * 4);
   return ("pic" + n + ".png");
@@ -15,15 +27,14 @@ function spinSlotbox(item, duration) {
   return slotDownKeyframes;
 }
 
-var button = document.getElementById("button");
-var slots = [1,2,3].map(x => document.getElementById("item"+x));
-var slotAnimations = slots.map(x => new Animation(spinSlotbox(x, 50)), document.timeline);
-
-button.addEventListener("click", spinAll, false);
-
 function swap(item) {
   item.children[0].src = item.children[1].src;
   item.children[1].src = generate();
+}
+
+function swapRigged(item, val) {
+  item.children[0].src = item.children[1].src;
+  item.children[1].src = val
 }
 
 function spinAll() {
@@ -33,8 +44,17 @@ function spinAll() {
     let spinning = new Audio('sounds/spinning.WAV');
     spinning.play();
     let intId = setInterval(avalanche, 50);
-    setTimeout(function() { clearInterval(intId) }, 4000);
-    setTimeout(result, 4000);
+    setTimeout(function() { clearInterval(intId) }, spinL);
+    let items = scoped(slots, "-2");
+    if (instruction === "jackpot") {
+      setTimeout(function() { slots.map(x => swapRigged(x, "pic2.png")) }, spinL);
+      setTimeout(jackpot, spinL);
+    }
+    else if (instruction === "win") {
+      setTimeout(function() { slots.map(x => swapRigged(x, items[0].src)) }, spinL);
+      setTimeout(win, spinL);
+    }
+    else { setTimeout(result, spinL) };
   }
   else { alert("You can't play anymore") };
 }

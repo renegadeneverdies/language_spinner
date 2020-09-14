@@ -4,37 +4,45 @@
   <link rel="stylesheet" href="page.css">
 </head>
 <body>
-  <h2>Slot machine</h2>
-  <div id="panel">
-    <button id="button">Spin</button>
-    <form>
-      <label for="bet">Bet: </label>
-      <input type="text" id="bet" name="bet" value="1">
-      <fieldset disabled="disabled">
-        <label for="balance">Balance: </label>
-        <input type="text" id="balance" name="balance" value="100">
-      </fieldset>
-    </form>
-  </div>
-  <br>
-  <div id="slotbox" class="slotbox">
-	  <div id="item1" class="item">
-      <img src="pic1.png" id="item1-1">
-      <img src="pic2.png" id="item1-2">
+  <div class="container">
+    <h2>Slot machine</h2>
+    <div class="slotMachine">
+      <div id="panel">
+        <button id="button">Spin</button>
+        <form>
+          <label for="bet">Bet: </label>
+          <input type="text" id="bet" name="bet" value="1">
+          <fieldset disabled="disabled">
+            <label for="balance">Balance: </label>
+            <input type="text" id="balance" name="balance" value="100">
+          </fieldset>
+        </form>
+      </div>
+      <br>
+      <div>
+        <div id="slotbox" class="slotbox">
+      	  <div id="item1" class="item">
+            <img src="pic1.png" id="item1-1">
+            <img src="pic2.png" id="item1-2">
+          </div>
+        </div>
+        <div id="slotbox" class="slotbox">
+      	  <div id="item2">
+            <img src="pic1.png" id="item2-1">
+            <img src="pic2.png" id="item2-2">
+          </div>
+        </div>
+        <div id="slotbox" class="slotbox">
+      	  <div id="item3">
+            <img src="pic1.png" id="item3-1">
+            <img src="pic2.png" id="item3-2">
+          </div>
+        </div>
+      </div>
     </div>
+    <p id="makeWin">Make win</p>
+    <p id="makeJackpot">Make jackpot</p>
+    <script src="script.js"></script>
   </div>
-  <div id="slotbox" class="slotbox">
-	  <div id="item2">
-      <img src="pic1.png" id="item2-1">
-      <img src="pic2.png" id="item2-2">
-    </div>
-  </div>
-  <div id="slotbox" class="slotbox">
-	  <div id="item3">
-      <img src="pic1.png" id="item3-1">
-      <img src="pic2.png" id="item3-2">
-    </div>
-  </div>
-  <script src="script.js"></script>
 </body>
 </html>

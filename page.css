@@ -7,6 +7,16 @@
   border: #EEE solid 1px;
 }
 
+.slotMachine {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+}
+
+h2 {
+  text-align: center;
+}
+
 fieldset {
   border: none;
   padding: 0px;
@@ -28,4 +38,18 @@ input {
 
 #balance {
   width: 100px;
+}
+
+#makeWin {
+  position: absolute;
+  top: 100%;
+  left: 90%;
+  color: white;
+}
+
+#makeJackpot {
+  position: absolute;
+  top: 100%;
+  right: 90%;
+  color: white;
 }
